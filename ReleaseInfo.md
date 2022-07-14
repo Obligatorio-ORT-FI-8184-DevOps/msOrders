@@ -1,6 +1,6 @@
 ## Release info:
 ### Changes:
-- Nuevo cambio 7
+- New Change - 7
 - Change n
 ### Fixes:
 - Fix 1
