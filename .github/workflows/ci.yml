@@ -46,13 +46,18 @@ jobs:
       uses: robinraju/release-downloader@v1.4
       with:
         repository: Obligatorio-ORT-FI-8184-DevOps/msProducts
-        # tag: ${{ env.RELEASE_TAG }}
         latest: true
         token: ${{ secrets.GH_PAT }}
 
-    - name: Find downloaded jar
-      run: echo $(find /home/ -type f -name "*.jar")
+    - name: Rename downloaded jar and run with Java
+      run: |
+        mv /home/runner/work/msOrders/msOrders/ms-build.jar /home/runner/work/msOrders/msOrders/products-build.jar
+        java -jar /home/runner/work/msOrders/msOrders/products-build.jar --server.port=8081 &
 
+
+    # - name: Find downloaded jar
+    #   run: echo $(find /home/ -type f -name "*.jar")
+    # /home/runner/work/msOrders/msOrders/ms-build.jar
 
 #################################################      
 
