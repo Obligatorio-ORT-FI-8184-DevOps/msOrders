@@ -48,7 +48,7 @@ jobs:
         repository: Obligatorio-ORT-FI-8184-DevOps/msProducts
         # tag: ${{ env.RELEASE_TAG }}
         latest: true
-        token: ${{ secrets.PAT_TOKEN }}
+        token: ${{ secrets.GH_PAT }}
 
     - name: Find downloaded jar
       run: echo $(find /home/ -type f -name "*.jar")
