@@ -1,0 +1,64 @@
+{
+	"info": {
+		"_postman_id": "c6bf3b39-f79f-4bae-b34f-a818798de6f3",
+		"name": "msOrders",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Orders",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code & body format\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    pm.response.to.be.ok;\r",
+							"    pm.response.to.be.json;\r",
+							"})\r",
+							"\r",
+							"pm.test(\"All properties & data types\", () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson).to.be.an('object')\r",
+							"    pm.expect(responseJson.orderId).to.be.a('string');\r",
+							"    pm.expect(responseJson.success).to.be.a('boolean');\r",
+							"    pm.expect(responseJson.description).to.be.a('string');\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time below 500ms\", () => {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    \"123\", \"321\", \"111\"\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/orders",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
