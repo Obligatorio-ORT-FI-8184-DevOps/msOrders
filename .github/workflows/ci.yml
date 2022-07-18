@@ -61,6 +61,9 @@ jobs:
       run: |
         mv /home/runner/work/msOrders/msOrders/ms-build.jar /home/runner/work/msOrders/msOrders/shipping-build.jar
         java -jar /home/runner/work/msOrders/msOrders/shipping-build.jar --server.port=8082 &
+
+    - name: -------- Test shipping
+      run: curl http://localhost:8082/shipping/a
 ################
     - name: Dowload products release artifact
       uses: robinraju/release-downloader@v1.4
@@ -73,6 +76,9 @@ jobs:
       run: |
         mv /home/runner/work/msOrders/msOrders/ms-build.jar /home/runner/work/msOrders/msOrders/products-build.jar
         java -jar /home/runner/work/msOrders/msOrders/products-build.jar --server.port=8083 &
+
+    - name: -------- Test products
+      run: curl http://localhost:8083/products
 ################
 
     - name: Run orders with Java
@@ -83,9 +89,9 @@ jobs:
     #   run: echo $(find /home/ -type f -name "*.jar")
     # /home/runner/work/msOrders/msOrders/ms-build.jar
 
+    # - name: Test shipping
+    #   run: curl http://localhost:8082/shipping/a
 
-    # - name: Test url
-    #   run: curl http://localhost:8083/products
 
 #################################################      
 
