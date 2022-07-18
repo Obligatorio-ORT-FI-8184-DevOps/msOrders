@@ -37,7 +37,6 @@ jobs:
     - name: Build with Maven - Code quality & security
       run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=Obligatorio-ORT-FI-8184-DevOps_${{ env.REPOSITORY_NAME }} -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
-#################################################
     - name: Dowload payments release artifact
       uses: robinraju/release-downloader@v1.4
       with:
@@ -49,7 +48,7 @@ jobs:
       run: |
         mv /home/runner/work/msOrders/msOrders/ms-build.jar /home/runner/work/msOrders/msOrders/payments-build.jar
         java -jar /home/runner/work/msOrders/msOrders/payments-build.jar --server.port=8081 &      
-################
+
     - name: Dowload shipping release artifact
       uses: robinraju/release-downloader@v1.4
       with:
@@ -62,9 +61,6 @@ jobs:
         mv /home/runner/work/msOrders/msOrders/ms-build.jar /home/runner/work/msOrders/msOrders/shipping-build.jar
         java -jar /home/runner/work/msOrders/msOrders/shipping-build.jar --server.port=8082 &
 
-    - name: -------- Test shipping
-      run: curl http://localhost:8082/shipping/a
-################
     - name: Dowload products release artifact
       uses: robinraju/release-downloader@v1.4
       with:
@@ -77,23 +73,8 @@ jobs:
         mv /home/runner/work/msOrders/msOrders/ms-build.jar /home/runner/work/msOrders/msOrders/products-build.jar
         java -jar /home/runner/work/msOrders/msOrders/products-build.jar --server.port=8083 &
 
-    - name: -------- Test products
-      run: curl http://localhost:8083/products
-################
-
     - name: Run orders with Java
       run: java -jar /home/runner/work/${{ env.REPOSITORY_NAME }}/${{ env.REPOSITORY_NAME }}/target/ms-build.jar http://localhost:8081 http://localhost:8082 http://localhost:8083 --server.port=8080 &
-
-
-    # - name: Find downloaded jar
-    #   run: echo $(find /home/ -type f -name "*.jar")
-    # /home/runner/work/msOrders/msOrders/ms-build.jar
-
-    # - name: Test shipping
-    #   run: curl http://localhost:8082/shipping/a
-
-
-#################################################      
 
     - name: Setup NodeJS
       uses: actions/setup-node@v3
