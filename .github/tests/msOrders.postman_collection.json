@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"name": "Orders",
+			"name": "OrdersPost",
 			"event": [
 				{
 					"listen": "test",
@@ -18,16 +18,22 @@
 							"    pm.response.to.be.json;\r",
 							"})\r",
 							"\r",
+							"const responseJson = pm.response.json();\r",
+							"\r",
 							"pm.test(\"All properties & data types\", () => {\r",
-							"    const responseJson = pm.response.json();\r",
 							"    pm.expect(responseJson).to.be.an('object')\r",
 							"    pm.expect(responseJson.orderId).to.be.a('string');\r",
 							"    pm.expect(responseJson.success).to.be.a('boolean');\r",
 							"    pm.expect(responseJson.description).to.be.a('string');\r",
 							"})\r",
 							"\r",
-							"pm.test(\"Response time below 1000ms\", () => {\r",
-							"  pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+							"pm.test(\"Missing product case\", () => {\r",
+							"    pm.expect(responseJson.success).to.be.equal(false)\r",
+							"    pm.expect(responseJson.description).to.be.contains('Missing:');\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time below 1500ms\", () => {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(1500);\r",
 							"})"
 						],
 						"type": "text/javascript"
@@ -39,13 +45,56 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "[\r\n    \"123\", \"321\", \"111\"\r\n]",
+					"raw": "[\r\n    \"123\", \"321\", \"999999\"\r\n]",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
+				"url": {
+					"raw": "http://localhost:8080/orders",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "OrdersGet",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code & body format\", () => {\r",
+							"    pm.response.to.have.status(405)\r",
+							"    pm.response.to.be.json\r",
+							"})\r",
+							"\r",
+							"const responseJson = pm.response.json()\r",
+							"\r",
+							"pm.test(\"Not allowed method\", () => {\r",
+							"    pm.expect(responseJson).to.be.an('object')\r",
+							"    pm.expect(responseJson.path).to.equal('/orders')\r",
+							"    pm.expect(responseJson.error).to.equal('Method Not Allowed')\r",
+							"    var valid = (new Date(responseJson.timestamp)).getTime() > 0\r",
+							"    pm.expect(valid).to.be.equal(true)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
 				"url": {
 					"raw": "http://localhost:8080/orders",
 					"protocol": "http",
