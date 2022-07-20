@@ -1,1 +1,1 @@
-[![Orders CI](https://github.com/Obligatorio-ORT-FI-8184-DevOps/msOrders/actions/workflows/ci.yml/badge.svg)](https://github.com/Obligatorio-ORT-FI-8184-DevOps/msOrders/actions/workflows/ci.yml)
+<sup>Orders</sup> [![](https://github.com/Obligatorio-ORT-FI-8184-DevOps/msOrders/actions/workflows/ci.yml/badge.svg)](https://github.com/Obligatorio-ORT-FI-8184-DevOps/msOrders/actions/workflows/ci.yml)
